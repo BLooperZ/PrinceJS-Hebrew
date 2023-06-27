@@ -8,7 +8,7 @@ PrinceJS.Preloader.prototype = {
       PrinceJS.SCREEN_WIDTH * 0.5,
       PrinceJS.SCREEN_HEIGHT * 0.5,
       "font",
-      "Loading. . . .",
+      "בטעינה . . .".split("").reverse().join(""),
       16
     );
     this.text.anchor.setTo(0.5, 0.5);
@@ -89,7 +89,7 @@ PrinceJS.Preloader.prototype = {
   },
 
   create: function () {
-    this.text.setText("Press to Start");
+    this.text.setText("לחצו כדי להתחיל".split("").reverse().join(""));
 
     this.input.keyboard.onDownCallback = this.start.bind(this);
     this.game.input.onDown.addOnce(() => {

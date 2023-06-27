@@ -1,5 +1,9 @@
 "use strict";
 
+function textToVisual(text) {
+  return text.split("").reverse().join("").replace(/\d+/g, (match) => match.split("").reverse().join(""))
+}
+
 PrinceJS.Interface = function (game, delegate) {
   this.game = game;
   this.delegate = delegate;
@@ -202,7 +206,7 @@ PrinceJS.Interface.prototype = {
     if (PrinceJS.endTime || PrinceJS.skipShowLevel) {
       return;
     }
-    this.showText("LEVEL " + PrinceJS.currentLevel, "level");
+    this.showText("שלב " + PrinceJS.currentLevel, "level");
     this.hideTextTimer = 25;
     PrinceJS.Utils.delayed(() => {
       if (!this.showTextType || this.showTextType === "level") {
@@ -237,7 +241,7 @@ PrinceJS.Interface.prototype = {
       return;
     }
     let minutes = PrinceJS.Utils.getRemainingMinutes();
-    this.showText(minutes + (minutes === 1 ? " MINUTE " : " MINUTES ") + "LEFT", "minutes");
+    this.showText(minutes === 1 ? "נותרה דקה 1" : ("נותרו " + minutes + " דקות"), "minutes");
     this.hideTextTimer = 30;
   },
 
@@ -257,22 +261,22 @@ PrinceJS.Interface.prototype = {
     if (PrinceJS.Utils.getRemainingMinutes() > 0) {
       seconds = PrinceJS.Utils.getRemainingSeconds();
     }
-    this.showText(seconds + (seconds === 1 ? " SECOND " : " SECONDS ") + "LEFT", "seconds");
+    this.showText(seconds === 1 ? "נותרה שניה 1" : ("נותרו " + seconds + " שניות"), "seconds");
   },
 
   showPressButtonToContinue: function () {
     PrinceJS.Utils.delayed(() => {
-      this.showText("Press Button to Continue", "continue");
+      this.showText("לחצו כדי להמשיך", "continue");
       this.pressButtonToContinueTimer = 200;
     }, 4000);
   },
 
   showGamePaused: function () {
-    this.showText("GAME PAUSED", "paused");
+    this.showText("המשחק מושהה", "paused");
   },
 
   showText: function (text, type) {
-    this.text.setText(text);
+    this.text.setText(textToVisual(text));
     this.showTextType = type;
     this.hideTextTimer = -1;
   },
